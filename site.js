@@ -19,24 +19,3 @@ document.addEventListener('keydown', event => {
 window.matchMedia('(min-width: 681px)').addEventListener('change', event => {
   if (event.matches) setMenuOpen(false);
 });
-
-const cvFiles = {
-  en: { prefix: 'en', language: 'English', label: 'English CV preview, two pages', status: 'Showing the English CV.' },
-  zh: { prefix: 'zh', language: 'Chinese', label: 'Chinese CV preview, two pages', status: 'Showing the Chinese CV.' }
-};
-const preview = document.querySelector('#cv-preview');
-const languageButtons = document.querySelectorAll('[data-cv]');
-languageButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    if (button.getAttribute('aria-pressed') === 'true') return;
-    const cv = cvFiles[button.dataset.cv];
-    preview.querySelectorAll('img').forEach((page, index) => {
-      page.src = `assets/cv-preview/${cv.prefix}-${index + 1}.png`;
-      page.alt = `${cv.language} CV, page ${index + 1} of 2`;
-    });
-    preview.scrollTop = 0;
-    preview.setAttribute('aria-label', cv.label);
-    languageButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    document.querySelector('#preview-status').textContent = cv.status;
-  });
-});
